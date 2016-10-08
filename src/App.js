@@ -1,18 +1,14 @@
 import React, {Component} from 'react';
-import {Provider} from 'react-redux';
-import AbilityScores from './AbilityScores';
-import store from './store';
+import ConnectedAbilityScores from './ConnectedAbilityScores';
 import './App.css';
 
 
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <div className="App">
-          <AbilityScores />
-        </div>
-      </Provider>
+      <div className="App">
+        <ConnectedAbilityScores />
+      </div>
     );
   }
 }

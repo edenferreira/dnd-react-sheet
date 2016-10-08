@@ -1,4 +1,5 @@
 import React from 'react';
+import './AbilityScore.css';
 
 const AbilityScore = ({
   name,
@@ -6,21 +7,14 @@ const AbilityScore = ({
   modifier,
   onPlusClick,
   onMinusClick
-}) => {
-  const style = {
-    color: 'white',
-    margin: '4px'
-  };
-
-  return (
-    <div>
-      <label style={style}>{name}</label>
-      <span style={style}>{value}</span>
-      <span style={style}>{modifier}</span>
-      <button onClick={onPlusClick}>+</button>
-      <button onClick={onMinusClick}>-</button>
-    </div>
-  );
-}
+}) => (
+  <div className='ability-score'>
+    <label>{name}</label>
+    <span>{value}</span>
+    <span>{modifier}</span>
+    <button onClick={onPlusClick}>+</button>
+    <button onClick={onMinusClick}>-</button>
+  </div>
+);
 
 export default AbilityScore;

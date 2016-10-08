@@ -1,8 +1,7 @@
 import React from 'react';
 import AbilityScore from './AbilityScore';
-import {flow, add, divide, map, partial} from 'lodash/fp';
-
-const calcModifier = flow(add(10), divide(2), Math.floor);
+import {map} from 'lodash/fp';
+import './AbilityScores.css';
 
 const AbilityScores = ({
   onAddAbilityScore,
@@ -10,21 +9,21 @@ const AbilityScores = ({
   abilityScores
 }) => (
   <div>
-    <ul>
+    <ul className='ability-scores__list'>
       {map(
-        ({name, value}) => (
+        ({name, value, modifier}) => (
           <li key={name}>
             <AbilityScore
               name={name}
               value={value}
-              modifier={calcModifier(value)}
-              onPlusClick={partial(onAddAbilityScore, name, 1)} 
-              onMinusClick={partial(onRemoveAbilityScore, name, 1)}>
+              modifier={modifier}
+              onPlusClick={() => onAddAbilityScore(name, 1)}
+              onMinusClick={() => onRemoveAbilityScore(name, 1)}>
             </AbilityScore>
           </li>
         ),
         abilityScores
-      )}            
+      )}
     </ul>
   </div>
 );
