@@ -1,0 +1,9 @@
+.labeled-input {
+  padding: 4px;
+  display: inline-block;
+}
+
+.labeled-input .labeled-input__input {
+  display: block;
+  margin-top: 2px;
+}
