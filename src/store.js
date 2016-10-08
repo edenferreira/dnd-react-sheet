@@ -1,7 +1,10 @@
 import reducers from './reducers';
 import {createStore} from 'redux';
+import data from './data';
+
 
 const store = createStore(reducers, {
+  data,
   abilityScores: [
     {
       name: 'Str',
