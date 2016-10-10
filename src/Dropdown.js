@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {map} from 'lodash/fp';
+import './Dropdown.css';
 
 class Dropdown extends Component {
   constructor() {
@@ -13,11 +13,12 @@ class Dropdown extends Component {
       listVisible: !this.state.listVisible
     });
   }
-  handleListClick(option) {
+  handleListClick(e, option) {
+    e.preventDefault();
     this.props.onChange(option);
     this.setState({
       listVisible: false
-    })
+    });
   }
   listClass() {
     return this.state.listVisible ?
@@ -27,16 +28,15 @@ class Dropdown extends Component {
   render() {
     return (
       <div className='dropdown'>
-        <input value={this.props.selected} readOnly />
-        <button onClick={() => this.handleClick()} >\/</button>
+        <span className='dropdown__selected'>{this.props.selected}</span>
+        <button onClick={() => this.handleClick()} >*</button>
         <ul className={this.listClass()}>
-          {map(option => (
-            <li key={option}
-              onClick={() => this.handleListClick(option)}>
-              {option}
+          {this.props.options.map((option, i) => (
+            <li key={i}
+              onClick={e => this.handleListClick(e, option)}>
+              {JSON.stringify(option)}
             </li>
-          ),
-          this.props.options)}
+          ))}
         </ul>
       </div>
     );

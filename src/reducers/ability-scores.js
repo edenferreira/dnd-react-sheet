@@ -1,44 +1,82 @@
-import {__, flow, subtract, divide, floor} from 'lodash/fp';
+import {
+  __,
+  flow,
+  subtract,
+  divide,
+  floor,
+  map,
+  find,
+  max,
+  add
+} from 'lodash/fp';
+import {
+  ADD_ABILITY,
+  REMOVE_ABILITY,
+  CHANGE_RACE
+} from '../actions/names';
+import {STR, DEX, CON, INT, WIS, CHA} from '../data/abilities';
 
 const calcModifier = flow(subtract(__, 10), divide(__, 2), floor);
 
-const abilityScore = (state = {}, action) => {
-  let value, modifier;
-  switch (action.type) {
-    case 'ADD_ABILITY':
-      value = state.value + action.amount;
-      modifier = calcModifier(value);
+const calcNewState = (abilities, name, value, fn) => {
+  return abilities.map(ability => {
+    if (ability.name === name) {
       return {
-        ...state,
-        value,
-        modifier
+        ...ability,
+        value: fn(ability.value, value),
+        modifier: calcModifier(fn(ability.value, value))
       }
-    case 'REMOVE_ABILITY':
-      value = state.value - action.amount;
-      modifier = calcModifier(value);
-      return {
-        ...state,
-        value,
-        modifier
-      }
-    default:
-      return state
-  }
+    }
+    return ability
+  })
 }
 
-const abilityScores = (state = [], action) => {
-  switch (action.type) {
-    case 'ADD_ABILITY':
-    case 'REMOVE_ABILITY':
-      return state.map(score => {
-        if (score.name === action.name) {
-          return abilityScore(score, action);
-        }
-        return score;
-      });
+const abilityScores = (
+  state = [
+    {
+      name: STR,
+      value: 8,
+      modifier: -1
+    },
+    {
+      name: DEX,
+      value: 8,
+      modifier: -1
+    },
+    {
+      name: CON,
+      value: 8,
+      modifier: -1
+    },
+    {
+      name: INT,
+      value: 8,
+      modifier: -1
+    },
+    {
+      name: WIS,
+      value: 8,
+      modifier: -1
+    },
+    {
+      name: CHA,
+      value: 8,
+      modifier: -1
+    }
+  ],
+  action
+) => {
+  const {type, name, value} = action;
+  switch (type) {
+    case ADD_ABILITY:
+      return calcNewState(state, name, value, add);
+
+    case REMOVE_ABILITY:
+      return calcNewState(state, name, value, subtract)
+
     default:
       return state
   }
-}
+};
 
 export default abilityScores;

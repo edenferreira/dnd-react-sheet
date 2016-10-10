@@ -1,3 +1,8 @@
 .App .ability-scores{
     width: 200px;
 }
+
+.App ul {
+    list-style: none;
+    padding: 0;
+}

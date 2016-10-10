@@ -3,11 +3,13 @@ import './LabeledInput.css';
 
 const LabeledInput = ({
   label,
+  defaultValue,
   onChange
 }) => (
   <label className='labeled-input'>
     {label}
-    <input className='labeled-input__input'
+    <input defaultValue={defaultValue}
+      className='labeled-input__input'
       onChange={e => onChange(e.target.value)}/>
   </label>
 );

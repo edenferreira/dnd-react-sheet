@@ -8,10 +8,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddAbilityScore: (name, amount) => {
+    onAddAbilityScore(name, amount) {
       dispatch(addAbilityScore(name, amount));
     },
-    onRemoveAbilityScore: (name, amount) => {
+    onRemoveAbilityScore(name, amount) {
       dispatch(removeAbilityScore(name, amount));
     }
   }

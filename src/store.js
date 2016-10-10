@@ -1,42 +1,13 @@
 import reducers from './reducers';
-import {createStore} from 'redux';
-import data from './data';
+import {createStore, applyMiddleware} from 'redux';
 
+const logger = store => next => action => {
+  console.log('dispatching', action)
+  let result = next(action)
+  console.log('next state', store.getState())
+  return result
+};
 
-const store = createStore(reducers, {
-  data,
-  abilityScores: [
-    {
-      name: 'Str',
-      value: 8,
-      modifier: -1
-    },
-    {
-      name: 'Dex',
-      value: 8,
-      modifier: -1
-    },
-    {
-      name: 'Con',
-      value: 8,
-      modifier: -1
-    },
-    {
-      name: 'Int',
-      value: 8,
-      modifier: -1
-    },
-    {
-      name: 'Wis',
-      value: 8,
-      modifier: -1
-    },
-    {
-      name: 'Cha',
-      value: 8,
-      modifier: -1
-    }
-  ]
-});
+const store = createStore(reducers, applyMiddleware(logger));
 
 export default store;

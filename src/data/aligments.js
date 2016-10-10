@@ -1,0 +1,9 @@
+export const LAWFUL_GOOD = 'LAWFUL_GOOD';
+export const LAWFUL_NEUTRAL = 'LAWFUL_NEUTRAL';
+export const LAWFUL_EVIL = 'LAWFUL_EVIL';
+export const NEUTRAL_GOOD = 'NEUTRAL_GOOD';
+export const NEUTRAL_NEUTRAL = 'NEUTRAL_NEUTRAL';
+export const NEUTRAL_EVIL = 'NEUTRAL_EVIL';
+export const CHAOTIC_GOOD = 'CHAOTIC_GOOD';
+export const CHAOTIC_NEUTRAL = 'CHAOTIC_NEUTRAL';
+export const CHAOTIC_EVIL = 'CHAOTIC_EVIL';
