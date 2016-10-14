@@ -13,7 +13,7 @@ export const DWARF = Object.freeze({
   abilities: [
     {
       name: CON,
-      amount: 2
+      value: 2
     }
   ],
   size: MEDIUM,
@@ -46,7 +46,7 @@ export const ELF = Object.freeze({
   abilities: [
     {
       name: DEX,
-      amount: 2
+      value: 2
     }
   ],
   size: MEDIUM,
@@ -79,7 +79,7 @@ export const HALFLING = Object.freeze({
   abilities: [
     {
       name: DEX,
-      amount: 2
+      value: 2
     }
   ],
   size: SMALL,
@@ -106,27 +106,27 @@ export const HUMAN = Object.freeze({
   abilities: [
     {
       name: STR,
-      amount: 1
+      value: 1
     },
     {
       name: DEX,
-      amount: 1
+      value: 1
     },
     {
       name: CON,
-      amount: 1
+      value: 1
     },
     {
       name: INT,
-      amount: 1
+      value: 1
     },
     {
       name: WIS,
-      amount: 1
+      value: 1
     },
     {
       name: CHA,
-      amount: 1
+      value: 1
     }
   ],
   size: MEDIUM,

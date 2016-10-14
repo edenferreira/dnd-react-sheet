@@ -4,15 +4,11 @@ import {
   subtract,
   divide,
   floor,
-  map,
-  find,
-  max,
   add
 } from 'lodash/fp';
 import {
   ADD_ABILITY,
-  REMOVE_ABILITY,
-  CHANGE_RACE
+  REMOVE_ABILITY
 } from '../actions/names';
 import {STR, DEX, CON, INT, WIS, CHA} from '../data/abilities';
 

@@ -7,25 +7,35 @@ import {map, get, find} from 'lodash/fp';
 class BasicInformation extends Component {
   render() {
     return (
-      <div className='basic-information'>
-        <LabeledInput label={'Name'}
-          defaultValue={this.props.name}
-          onChange={this.props.onNameChange} />
-        <LabeledInput label={'Player Name'}
-          defaultValue={this.props.playerName}
-          onChange={this.props.onPlayerNameChange} />
-        <LabeledDropdown label={'Class'}
-          selected={this.props.classChosen.name}
-          options={[]}
-          onChange={this.props.onClassChosenChange} />
-        <LabeledDropdown label={'Race'}
-          selected={this.props.race.name}
-          options={map(get('name'), this.props.options.races)}
-          onChange={race => this.props.onRaceChange(find(r => r.name === race, this.props.options.races))} />
-        <LabeledDropdown label='Aligment'
-          selected={this.props.aligment}
-          options={this.props.options.aligments}
-          onChange={this.props.onAligmentChange} />
+      <div className='basic-information pure-g'>
+        <span className="pure-u-sm-1-4">
+          <LabeledInput label={'Name'}
+            defaultValue={this.props.name}
+            onChange={this.props.onNameChange} />
+        </span>
+        <span className="pure-u-sm-1-4">
+          <LabeledInput label={'Player Name'}
+            defaultValue={this.props.playerName}
+            onChange={this.props.onPlayerNameChange} />
+        </span>
+        <span className="pure-u-sm-1-4">
+          <LabeledDropdown label={'Class'}
+            selected={this.props.classChosen.name}
+            options={[]}
+            onChange={this.props.onClassChosenChange} />
+        </span>
+        <span className="pure-u-sm-1-4">
+          <LabeledDropdown label={'Race'}
+            selected={this.props.race}
+            options={this.props.races}
+            onChange={this.props.onRaceChange} />
+        </span>
+        <span className="pure-u-sm-1-4">
+          <LabeledDropdown label='Aligment'
+            selected={this.props.aligment}
+            options={this.props.aligments}
+            onChange={this.props.onAligmentChange} />
+        </span>
       </div>
     );
   }

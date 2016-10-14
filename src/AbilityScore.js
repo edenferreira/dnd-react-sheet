@@ -8,12 +8,14 @@ const AbilityScore = ({
   onPlusClick,
   onMinusClick
 }) => (
-  <div className='ability-score'>
-    <label>{name}</label>
-    <span>{value}</span>
-    <span>{modifier}</span>
-    <button onClick={onPlusClick}>+</button>
-    <button onClick={onMinusClick}>-</button>
+  <div className='ability-score pure-g'>
+    <label className='pure-u-sm-1-4'>{name}</label>
+    <span className='pure-u-sm-1-4'>{value}</span>
+    <span className='pure-u-sm-1-4'>{modifier}</span>
+    <span className='pure-u-sm-1-4'>
+      <button onClick={onPlusClick}>+</button>
+      <button onClick={onMinusClick}>-</button>
+    </span>
   </div>
 );
 

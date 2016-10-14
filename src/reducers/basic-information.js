@@ -7,18 +7,6 @@ import {
   ADD_LEVEL,
   REMOVE_LEVEL,
 } from '../actions/names';
-import {combineReducers} from 'redux';
-
-const changeBasicInformation = (field, actionType, initial) => {
-  return (state = {}, action) => {
-    switch (action.type) {
-      case actionType:
-        return {...action[field]};
-      default:
-        return state || initial;
-    }
-  };
-};
 
 const basicInformation = (
   state = {
