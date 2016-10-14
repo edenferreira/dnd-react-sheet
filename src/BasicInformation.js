@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import LabeledInput from './LabeledInput';
 import LabeledDropdown from './LabeledDropdown';
 import './BasicInformation.css';
-import {map, get, find} from 'lodash/fp';
 
 class BasicInformation extends Component {
   render() {

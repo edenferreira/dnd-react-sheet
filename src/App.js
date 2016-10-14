@@ -14,6 +14,7 @@ import {
   CHAOTIC_NEUTRAL,
   CHAOTIC_EVIL
 } from './data/aligments';
+
 import {map, get, find, matches} from 'lodash/fp';
 import './App.css';
 
