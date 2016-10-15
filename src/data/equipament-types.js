@@ -4,3 +4,7 @@ export const HEAVY_ARMOR = 'HEAVY';
 export const SHIELD = 'SHIELD';
 export const SIMPLE_WEAPON = 'SIMPLE_WEAPON';
 export const MARTIAL_WEAPON = 'MARTIAL_WEAPON';
+export const HAND_CROSSBOW = 'HAND_CROSSBOW';
+export const LONGSWORD = 'LONGSWORD';
+export const RAPIER = 'RAPIER';
+export const SHORTSWORD = 'SHORTSWORD';

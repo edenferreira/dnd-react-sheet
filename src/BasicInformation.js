@@ -19,9 +19,13 @@ class BasicInformation extends Component {
         </span>
         <span className="col-sm-3">
           <LabeledDropdown label={'Class'}
-            selected={this.props.classChosen.name}
-            options={[]}
+            selected={this.props.classChosen}
+            options={this.props.classes}
             onChange={this.props.onClassChosenChange} />
+        </span>
+        <span className="col-sm-3">
+          <LabeledInput label={'Level'}
+            defaultValue={this.props.level} />
         </span>
         <span className="col-sm-3">
           <LabeledDropdown label={'Race'}
