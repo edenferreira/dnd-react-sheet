@@ -2,15 +2,7 @@ import React from 'react';
 import AbilityScore from './AbilityScore';
 import {map} from 'lodash/fp';
 import './AbilityScores.css';
-import {
-  __,
-  flow,
-  subtract,
-  divide,
-  floor
-} from 'lodash/fp';
-
-const calcModifier = flow(subtract(__, 10), divide(__, 2), floor);
+import {modifier} from './calculations';
 
 const AbilityScores = ({
   onAddAbilityScore,
@@ -25,7 +17,7 @@ const AbilityScores = ({
             <AbilityScore
               name={name}
               value={value}
-              modifier={calcModifier(value)}
+              modifier={modifier(value)}
               onPlusClick={() => onAddAbilityScore(name, 1)}
               onMinusClick={() => onRemoveAbilityScore(name, 1)}>
             </AbilityScore>

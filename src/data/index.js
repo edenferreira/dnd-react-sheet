@@ -2,18 +2,26 @@ import * as abilities from './abilities';
 import * as weapons from './weapons';
 import * as sizes from './sizes';
 import * as languages from './languages';
-import * as proficiencies from './proficiencies';
+import * as skills from './skills';
 import * as races from './races';
 import * as aligments from './aligments';
+import {map, values} from 'lodash/fp';
 
-const data = Object.freeze({
+export const data = Object.freeze({
   abilities,
   weapons,
   sizes,
   languages,
-  proficiencies,
+  skills,
   races,
   aligments
 });
 
-export default data;
+const initialState = Object.freeze({
+  ...data,
+  abilities: map(name => ({name, value: 8}), data.abilities),
+  skills: map(skill => ({...skill, value: 0}), data.skills),
+  aligments: values(data.aligments)
+});
+
+export const getInitialState = () => initialState;

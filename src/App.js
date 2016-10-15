@@ -1,91 +1,41 @@
 import React, {Component} from 'react';
 import AbilityScores from './AbilityScores';
 import BasicInformation from './BasicInformation';
-import {STR, DEX, CON, INT, WIS, CHA} from './data/abilities';
-import {DWARF, HUMAN, ELF, HALFLING} from './data/races';
+import SkillList from './SkillList';
+import {getInitialState} from './data';
 import {
-  LAWFUL_GOOD,
-  LAWFUL_EVIL,
-  LAWFUL_NEUTRAL,
-  NEUTRAL_GOOD,
-  NEUTRAL_NEUTRAL,
-  NEUTRAL_EVIL,
-  CHAOTIC_GOOD,
-  CHAOTIC_NEUTRAL,
-  CHAOTIC_EVIL
-} from './data/aligments';
-
-import {map, get, find, matches} from 'lodash/fp';
+  map,
+  get,
+  find,
+} from 'lodash/fp';
+import {
+  abilityScores,
+  skills,
+  incAbility,
+  decAbility,
+} from './calculations';
 import './App.css';
 
 class App extends Component {
   constructor() {
     super();
-    const value = 8;
     this.state = {
-      abilityScores: map(
-        name => ({name, value}), [STR, DEX, CON, INT, WIS, CHA]),
-      races: [DWARF, HUMAN, ELF, HALFLING],
+      ...getInitialState(),
       race: {name: ''},
       aligment: '',
-      aligments: [
-        LAWFUL_GOOD,
-        LAWFUL_EVIL,
-        LAWFUL_NEUTRAL,
-        NEUTRAL_GOOD,
-        NEUTRAL_NEUTRAL,
-        NEUTRAL_EVIL,
-        CHAOTIC_GOOD,
-        CHAOTIC_NEUTRAL,
-        CHAOTIC_EVIL
-      ],
       name: '',
       playerName: ''
     };
   }
   raceNames = () => map(get('name'), this.state.races)
-  abilityScores = () => {
-    if (!this.state.race.abilities) return this.state.abilityScores;
-
-    return map(
-      ability => {
-        var raceAbility = find(
-          matches({name: ability.name}),
-          this.state.race.abilities);
-        console.log(raceAbility)
-        if (!raceAbility) return ability;
-
-        return {
-          ...ability,
-          value: ability.value + raceAbility.value
-        };
-      },
-      this.state.abilityScores)
-  }
   handleAddAbilityScore = (name) => {
     this.setState({
-      abilityScores: map(ability => {
-        if (ability.name === name) {
-          return {
-            ...ability,
-            value: ability.value + 1
-          };
-        }
-        return ability;
-      }, this.state.abilityScores)
+      abilities: incAbility(name, this.state.abilities)
     });
   }
   handleRemoveAbilityScore = (name) => {
     this.setState({
-      abilityScores: map(ability => {
-        if (ability.name === name) {
-          return {
-            ...ability,
-            value: ability.value - 1
-          };
-        }
-        return ability;
-      }, this.state.abilityScores)
+      abilities: decAbility(name, this.state.abilities)
     });
   }
   handleNameChange = (name) => {
@@ -124,9 +74,21 @@ class App extends Component {
             />
         </span>
         <span className='pure-u-sm-1-4'>
-          <AbilityScores abilityScores={this.abilityScores()}
+          <AbilityScores abilityScores={abilityScores(
+            this.state.abilities,
+            this.state.race.abilities
+          )}
             onAddAbilityScore={this.handleAddAbilityScore}
             onRemoveAbilityScore={this.handleRemoveAbilityScore} />
+        </span>
+        <span className='pure-u-sm-1-3'>
+          <SkillList skills={skills(
+            this.state.skills,
+            abilityScores(
+              this.state.abilities,
+              this.state.race.abilities
+            )
+          )} />
         </span>
       </div>
     );
