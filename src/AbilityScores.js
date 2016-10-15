@@ -9,8 +9,8 @@ const AbilityScores = ({
   onRemoveAbilityScore,
   abilityScores
 }) => (
-  <div>
-    <ul className='ability-scores__list'>
+  <div className='row'>
+    <ul className='ability-scores__list col-sm-12'>
       {map(
         ({name, value}) => (
           <li key={name}>

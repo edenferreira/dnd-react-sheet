@@ -1,11 +1,8 @@
 .labeled-input {
-  padding: 4px;
   display: inline-block;
-  margin: 4px 8px;
   width: 100%;
 }
 
 .labeled-input .labeled-input__input {
   display: block;
-  margin-top: 2px;
 }

@@ -1,17 +1,18 @@
 import React from 'react';
 import {map} from 'lodash/fp';
+import './SkillList.css';
 
 const SkillList = ({
   skills
 }) => (
-  <ul>
+  <ul className='skill-list'>
     {map(
       ({name, ability, value}) => (
         <li key={name}
-          className='pure-g'>
-          <span className='pure-u-sm-1-3'>{name}</span>
-          <span className='pure-u-sm-1-3'>{ability}</span>
-          <span className='pure-u-sm-1-3'>{value}</span>
+          className='row'>
+          <span className='col-sm-8'>{name}</span>
+          <span className='col-sm-2'>{ability}</span>
+          <span className='col-sm-2'>{value}</span>
         </li>
       ),
       skills

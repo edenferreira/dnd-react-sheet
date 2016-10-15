@@ -70,5 +70,5 @@ export const incAbility = (name, abilities) => {
 };
 
 export const decAbility = (name, abilities) => {
-  return changeAbilityWithFn(name, abilities, subtract(1));
+  return changeAbilityWithFn(name, abilities, subtract(__, 1));
 };

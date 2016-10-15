@@ -1,13 +1,12 @@
-.dropdown {
-    position: relative;
-    width: 100%;
+.dropdown .btn {
+    font-size: 0.9em;
+    padding: 1px;
+    height: 24px;
+    width: 24px;
 }
 
 .dropdown .dropdown__selected {
-    width: 80%;
-    padding: 4px;
-    border: 1px solid #dddddd;
-    display: inline-block;
+    width: calc(100% - 25px);
     height: 24px;
     box-sizing: border-box;
 }
@@ -18,21 +17,4 @@
 
 .dropdown .dropdown__list.hide {
     display: none;
-}
-
-.dropdown .dropdown__list {
-    position: absolute;
-    width: 100%;
-    margin: 0;
-    z-index: 2;
-    background-color: white;
-}
-
-.dropdown .dropdown__list li {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-    box-sizing: border-box;
-    width: 82%;
-    padding: 4px 0 4px 4px;
 }

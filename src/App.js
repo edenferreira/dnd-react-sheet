@@ -1,19 +1,27 @@
-import React, {Component} from 'react';
+import React, {
+  Component
+}
+from 'react';
 import AbilityScores from './AbilityScores';
 import BasicInformation from './BasicInformation';
 import SkillList from './SkillList';
-import {getInitialState} from './data';
+import {
+  getInitialState
+}
+from './data';
 import {
   map,
   get,
   find,
-} from 'lodash/fp';
+}
+from 'lodash/fp';
 import {
   abilityScores,
   skills,
   incAbility,
   decAbility,
-} from './calculations';
+}
+from './calculations';
 import './App.css';
 
 class App extends Component {
@@ -21,7 +29,9 @@ class App extends Component {
     super();
     this.state = {
       ...getInitialState(),
-      race: {name: ''},
+      race: {
+        name: ''
+      },
       aligment: '',
       name: '',
       playerName: ''
@@ -50,7 +60,9 @@ class App extends Component {
   }
   handleRaceChange = (raceName) => {
     this.setState({
-      race: find(({name}) => name === raceName, this.state.races)
+      race: find(({
+        name
+      }) => name === raceName, this.state.races)
     });
   }
   handleAligmentChange = (aligment) => {
@@ -60,36 +72,41 @@ class App extends Component {
   }
   render() {
     return (
-      <div className='App pure-g'>
-        <span className='pure-u-sm-1-1'>
-          <BasicInformation classChosen={{}}
-            race={this.state.race.name}
-            races={this.raceNames()}
-            aligment={this.state.aligment}
-            aligments={this.state.aligments}
-            onNameChange={this.handleNameChange}
-            onPlayerNameChange={this.handlePlayerNameChange}
-            onRaceChange={this.handleRaceChange}
-            onAligmentChange={this.handleAligmentChange}
-            />
-        </span>
-        <span className='pure-u-sm-1-4'>
-          <AbilityScores abilityScores={abilityScores(
-            this.state.abilities,
-            this.state.race.abilities
-          )}
-            onAddAbilityScore={this.handleAddAbilityScore}
-            onRemoveAbilityScore={this.handleRemoveAbilityScore} />
-        </span>
-        <span className='pure-u-sm-1-3'>
-          <SkillList skills={skills(
-            this.state.skills,
-            abilityScores(
+      <div className='App'>
+        <div className='row'>
+          <span className='col-sm-12'>
+            <BasicInformation classChosen={{}}
+              race={this.state.race.name}
+              races={this.raceNames()}
+              aligment={this.state.aligment}
+              aligments={this.state.aligments}
+              onNameChange={this.handleNameChange}
+              onPlayerNameChange={this.handlePlayerNameChange}
+              onRaceChange={this.handleRaceChange}
+              onAligmentChange={this.handleAligmentChange}
+              />
+          </span>
+        </div>
+        <span className='space-16'></span>
+        <div className='row'>
+          <span className='col-sm-3'>
+            <AbilityScores abilityScores={abilityScores(
               this.state.abilities,
               this.state.race.abilities
-            )
-          )} />
-        </span>
+            )}
+              onAddAbilityScore={this.handleAddAbilityScore}
+              onRemoveAbilityScore={this.handleRemoveAbilityScore} />
+          </span>
+          <span className='col-sm-4'>
+            <SkillList skills={skills(
+              this.state.skills,
+              abilityScores(
+                this.state.abilities,
+                this.state.race.abilities
+              )
+            )} />
+          </span>
+        </div>
       </div>
     );
   }

@@ -4,6 +4,8 @@ import App from './App';
 import './index.css';
 
 ReactDOM.render(
-  <App />,
+  <div className='container-fluid'>
+    <App />
+  </div>,
   document.getElementById('root')
 );

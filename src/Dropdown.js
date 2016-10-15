@@ -23,14 +23,18 @@ class Dropdown extends Component {
   }
   listClass() {
     return this.state.listVisible ?
-      'dropdown__list show' :
-      'dropdown__list hide';
+      'dropdown-menu show' :
+      'dropdown-menu hide';
   }
   render() {
     return (
       <div className='dropdown'>
-        <span className='dropdown__selected'>{this.props.selected}</span>
-        <button onClick={() => this.handleClick()} >*</button>
+        <input className='dropdown__selected'
+          value={this.props.selected} />
+        <button onClick={() => this.handleClick()}
+          className='btn btn-default dropdown-toggle'>
+          <span className='caret'></span>
+        </button>
         <ul className={this.listClass()}>
           {map(option => (
             <li key={option}

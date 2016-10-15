@@ -1,3 +1,4 @@
+import recursiveFreeze from '../recursive-freeze';
 import {STR, DEX, CON, INT, WIS, CHA} from './abilities';
 import {
   BATTLE_AXE, HANDAXE, THROWING_HAMMER, WARHAMMER
@@ -6,9 +7,9 @@ import {
   COMMON, DWARVEN, ELVISH, HALFLINGLANG, ANY_LANGUAGE
 } from './languages';
 import {SMALL, MEDIUM} from './sizes';
-import {PERCEPTION} from './proficiencies';
+import {PERCEPTION} from './skills';
 
-export const DWARF = Object.freeze({
+export const DWARF = recursiveFreeze({
   name: 'Dwarf',
   abilities: [
     {
@@ -41,7 +42,7 @@ export const DWARF = Object.freeze({
   ]
 });
 
-export const ELF = Object.freeze({
+export const ELF = recursiveFreeze({
   name: 'Elf',
   abilities: [
     {
@@ -74,7 +75,7 @@ export const ELF = Object.freeze({
   ]
 });
 
-export const HALFLING = Object.freeze({
+export const HALFLING = recursiveFreeze({
   name: 'Halfling',
   abilities: [
     {
@@ -101,7 +102,7 @@ export const HALFLING = Object.freeze({
   ]
 })
 
-export const HUMAN = Object.freeze({
+export const HUMAN = recursiveFreeze({
   name: 'Human',
   abilities: [
     {
