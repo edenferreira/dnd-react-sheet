@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {map} from 'lodash/fp';
 import './Dropdown.css';
 
 class Dropdown extends Component {
@@ -31,12 +32,12 @@ class Dropdown extends Component {
         <span className='dropdown__selected'>{this.props.selected}</span>
         <button onClick={() => this.handleClick()} >*</button>
         <ul className={this.listClass()}>
-          {this.props.options.map((option, i) => (
-            <li key={i}
+          {map(option => (
+            <li key={option}
               onClick={e => this.handleListClick(e, option)}>
-              {JSON.stringify(option)}
+              {option}
             </li>
-          ))}
+          ), this.props.options)}
         </ul>
       </div>
     );
