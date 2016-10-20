@@ -3,18 +3,24 @@ import {
   find,
   filter,
   matches,
+  includes,
   map,
   subtract,
+  concat,
   divide,
   floor,
   flow,
   reduce,
+  sum,
+  get,
 } from 'lodash/fp';
 import {
   CON,
+  DEX,
 } from '../data/abilities';
 import {
   HIT_DIE,
+  AC,
 } from '../feature-types';
 
 const calcModifier = flow(subtract(__, 10), divide(__, 2), floor);
@@ -38,3 +44,21 @@ export const health = (abilities = [], feats) => {
     )(feats);
   return value + modifier
 }
+
+const acAbilities = flow(
+  concat({type: AC, payload: {ability: DEX}}),
+  filter(matches({type: AC})),
+  map(get('payload.ability'))
+)
+
+const allAcAbilities = feats => ({name}) => includes(
+  name, acAbilities(feats))
+
+export const ac = (bases, abilities = [], feats) => {
+  return flow(
+    filter(allAcAbilities(feats)),
+    map(get('modifier')),
+    concat(bases),
+    sum
+  )(abilities);
+};
