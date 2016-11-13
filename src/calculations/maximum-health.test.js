@@ -1,4 +1,4 @@
-import {health} from './index';
+import {maximumHealth} from './index';
 import {
   HIT_DIE
 } from '../feature-types';
@@ -8,7 +8,7 @@ import {
   DEX,
 } from '../data/abilities';
 
-describe('health', () => {
+describe('maximumHealth', () => {
   describe('given only one hit die', () => {
     const feats = [
       {
@@ -19,8 +19,8 @@ describe('health', () => {
       }
     ]
 
-    it('when I calculate the health', () => {
-      const result = health([], feats);
+    it('when I calculate the maximum health', () => {
+      const result = maximumHealth([], feats);
       expect(result).toEqual(7);
     })
   })
@@ -37,8 +37,8 @@ describe('health', () => {
       }
     }]
 
-    it('when I calculate the health', () => {
-      const result = health(abilities, feats)
+    it('when I calculate the maximum health', () => {
+      const result = maximumHealth(abilities, feats)
       expect(result).toEqual(11);
     })
   })
@@ -63,8 +63,8 @@ describe('health', () => {
       }
     ]
 
-    it('when I calculate the health', () => {
-      const result = health(abilities, feats);
+    it('when I calculate the maximum health', () => {
+      const result = maximumHealth(abilities, feats);
       expect(result).toEqual(17);
     })
   })
@@ -88,8 +88,8 @@ describe('health', () => {
       }
     ]
 
-    it('when I calculate the health', () => {
-      const result = health(abilities, feats)
+    it('when I calculate the maximum health', () => {
+      const result = maximumHealth(abilities, feats)
       expect(result).toEqual(4)
     })
   })
