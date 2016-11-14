@@ -1,12 +1,12 @@
 import {
   __,
+  defaultTo,
+  first,
   find,
   filter,
   matches,
   isEmpty,
-  last,
   includes,
-  tail,
   map,
   subtract,
   concat,
@@ -25,6 +25,7 @@ import {
   HIT_DIE,
   AC,
   INITIAVE,
+  SAVING_THROW,
 } from '../feature-types';
 
 const calcModifier = flow(subtract(__, 10), divide(__, 2), floor);
@@ -82,6 +83,24 @@ export const initiative = (abilities = [], feats = []) => {
 
 const proficiencyBonus = 3;
 
+const isProficient = (type, ability, feats) => flow(
+  filter(matches({type})),
+  map(get('payload')),
+  filter(matches({ability, proficient: true})),
+  first,
+  get('proficient'),
+  defaultTo(false)
+)(feats)
+
+const byTypeAbility = (type, ability) => ({type, payload: {ability}});
+
+const sumFeatValue = (match) => flow(
+  filter(matches(match)),
+  map(get('payload.value')),
+  map(defaultTo(0)),
+  sum
+);
+
 //MAYBE: if necessary change the return from number to the skill
 //with a value associated with
 export const skill = (skill, abilities) => {
@@ -90,3 +109,18 @@ export const skill = (skill, abilities) => {
   const {modifier} = find(matches({name: ability}), abilities);
   return modifier + (proficient ? proficiencyBonus : 0);
 }
+
+export const savingThrow = (saving, abilities, feats = []) => {
+  if (!saving || !abilities) {
+    throw new Error('both the ability and the abilities are required')
+  }
+  const {ability: name} = saving;
+  const {modifier} = find(matches({name}), abilities);
+  const getTotalValueSum = sumFeatValue(byTypeAbility(SAVING_THROW, name));
+  return modifier
+    + getTotalValueSum(feats)
+    + (
+      isProficient(SAVING_THROW, name, feats)
+      ? proficiencyBonus
+      : 0);
+};

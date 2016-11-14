@@ -1,4 +1,5 @@
 import {skill} from './index';
+import {abilitiesWithModifiers} from './test-helpers';
 import {
   ACROBATICS,
   PERCEPTION,
@@ -39,11 +40,7 @@ describe('skill', () => {
   describe('given abilities with 0 for modifier', () => {
     let abilities;
     beforeEach(() => {
-      const modifier = 0;
-      abilities = map(name => ({
-        name,
-        modifier,
-      }), [STR, DEX, CON, INT, WIS, CHA]);
+      abilities = abilitiesWithModifiers(0);
     });
 
     it('when I called to calculate one ability without proficiency', () => {
@@ -66,11 +63,7 @@ describe('skill', () => {
   describe('given abilities with 3 for modifier', () => {
     let abilities;
     beforeEach(() => {
-      const modifier = 3;
-      abilities = map(name => ({
-        name,
-        modifier,
-      }), [STR, DEX, CON, INT, WIS, CHA]);
+      abilities = abilitiesWithModifiers(3);
     });
 
     it('when I called to calculate one ability without proficiency', () => {
