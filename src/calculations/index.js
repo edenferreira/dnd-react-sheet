@@ -25,6 +25,7 @@ import {
   HIT_DIE,
   AC,
   INITIAVE,
+  SKILL,
   SAVING_THROW,
 } from '../feature-types';
 
@@ -83,16 +84,17 @@ export const initiative = (abilities = [], feats = []) => {
 
 const proficiencyBonus = 3;
 
-const isProficient = (type, ability, feats) => flow(
+const isProficient = (type, selector, feats) => flow(
   filter(matches({type})),
   map(get('payload')),
-  filter(matches({ability, proficient: true})),
+  filter(matches({...selector, proficient: true})),
   first,
   get('proficient'),
   defaultTo(false)
 )(feats)
 
 const byTypeAbility = (type, ability) => ({type, payload: {ability}});
+const byTypeName = (type, name) => ({type, payload: {name}});
 
 const sumFeatValue = (match) => flow(
   filter(matches(match)),
@@ -103,14 +105,20 @@ const sumFeatValue = (match) => flow(
 
 //MAYBE: if necessary change the return from number to the skill
 //with a value associated with
-export const skill = (skill, abilities) => {
+export const skill = (skill, abilities, feats) => {
   if (!skill || !abilities) throw new Error('both the skill and the abilities are required');
-  const {proficient, ability} = skill;
+  const {name, ability} = skill;
   const {modifier} = find(matches({name: ability}), abilities);
-  return modifier + (proficient ? proficiencyBonus : 0);
+  const getTotalValueSum = sumFeatValue(byTypeName(SKILL, name));
+  return modifier
+    + getTotalValueSum(feats)
+    + (
+        isProficient(SKILL, {name}, feats)
+        ? proficiencyBonus
+        : 0);
 }
 
-export const savingThrow = (saving, abilities, feats = []) => {
+export const savingThrow = (saving, abilities, feats) => {
   if (!saving || !abilities) {
     throw new Error('both the ability and the abilities are required')
   }
@@ -120,7 +128,7 @@ export const savingThrow = (saving, abilities, feats = []) => {
   return modifier
     + getTotalValueSum(feats)
     + (
-      isProficient(SAVING_THROW, name, feats)
+      isProficient(SAVING_THROW, {ability: name}, feats)
       ? proficiencyBonus
       : 0);
 };

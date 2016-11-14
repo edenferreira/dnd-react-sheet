@@ -6,6 +6,7 @@ import {
   STEALTH,
   DECEPTION,
   ANIMAL_HANDLING,
+  MEDICINE,
 } from '../data/skills'
 import {
   STR,
@@ -18,6 +19,9 @@ import {
 import {
   map,
 } from 'lodash/fp';
+import {
+  SKILL,
+} from '../feature-types';
 
 describe('skill', () => {
   it('when called without any parameter', () => {
@@ -44,19 +48,37 @@ describe('skill', () => {
     });
 
     it('when I called to calculate one ability without proficiency', () => {
-      const result = skill({
-        ...ACROBATICS,
-        proficient: false
-      }, abilities);
+      const result = skill(
+        ACROBATICS,
+        abilities);
       expect(result).toEqual(0);
     })
 
-    it('when I called to calculate one ability with proficiency', () => {
-      const result = skill({
-        ...ANIMAL_HANDLING,
-        proficient: true
-      }, abilities);
-      expect(result).toEqual(3);
+    describe('given feats with proficiency in animal handling', () => {
+      let feats;
+      beforeEach(() => {
+        feats = [{
+          type: 'ANOTHER',
+          payload: {
+            name: ANIMAL_HANDLING.name,
+            proficient: true
+          }
+        },{
+          type: SKILL,
+          payload: {
+            name: ANIMAL_HANDLING.name,
+            proficient: true
+          }
+        }]
+      })
+
+      it('when I called to calculate one ability with proficiency', () => {
+        const result = skill(
+          ANIMAL_HANDLING,
+          abilities,
+          feats);
+        expect(result).toEqual(3);
+      })
     })
   })
 
@@ -67,19 +89,51 @@ describe('skill', () => {
     });
 
     it('when I called to calculate one ability without proficiency', () => {
-      const result = skill({
-        ...STEALTH,
-        proficient: false
-      }, abilities);
+      const result = skill(
+        STEALTH,
+        abilities);
       expect(result).toEqual(3);
     })
 
-    it('when I called to calculate one ability with proficiency', () => {
-      const result = skill({
-        ...DECEPTION,
-        proficient: true
-      }, abilities);
-      expect(result).toEqual(6);
+    describe('given feats with proficiency in deception and value to acrobatics and medicine', () => {
+      let feats;
+      beforeEach(() => {
+        feats = [{
+          type: SKILL,
+          payload: {
+            name: DECEPTION.name,
+            proficient: true
+          }
+        }, {
+          type: SKILL,
+          payload: {
+            name: ACROBATICS.name,
+            value: 5
+          }
+        }, {
+          type: SKILL,
+          payload: {
+            name: MEDICINE.name,
+            value: 2
+          }
+        }]
+      })
+
+      it('when I called to calculate deception', () => {
+        const result = skill(
+          DECEPTION,
+          abilities,
+          feats);
+        expect(result).toEqual(6);
+      })
+
+      it('when I called to calculate medicine', () => {
+        const result = skill(
+          MEDICINE,
+          abilities,
+          feats);
+        expect(result).toEqual(5);
+      })
     })
   })
 })
