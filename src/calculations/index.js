@@ -103,32 +103,43 @@ const sumFeatValue = (match) => flow(
   sum
 );
 
+const calcSkillSaving = ({type, ability: name, proficiencySelector, featValueSelector, abilities, feats}) => {
+  const {modifier} = find(matches({name}), abilities);
+  const getTotalValueSum = sumFeatValue(featValueSelector);
+  return modifier
+    + getTotalValueSum(feats)
+    + (
+      isProficient(type, proficiencySelector, feats)
+      ? proficiencyBonus
+      : 0);
+}
+
 //MAYBE: if necessary change the return from number to the skill
 //with a value associated with
 export const skill = (skill, abilities, feats) => {
   if (!skill || !abilities) throw new Error('both the skill and the abilities are required');
   const {name, ability} = skill;
-  const {modifier} = find(matches({name: ability}), abilities);
-  const getTotalValueSum = sumFeatValue(byTypeName(SKILL, name));
-  return modifier
-    + getTotalValueSum(feats)
-    + (
-        isProficient(SKILL, {name}, feats)
-        ? proficiencyBonus
-        : 0);
+  return calcSkillSaving({
+    type: SKILL,
+    ability,
+    proficiencySelector: {name},
+    featValueSelector: byTypeName(SKILL, name),
+    abilities,
+    feats,
+  });
 }
 
 export const savingThrow = (saving, abilities, feats) => {
   if (!saving || !abilities) {
     throw new Error('both the ability and the abilities are required')
   }
-  const {ability: name} = saving;
-  const {modifier} = find(matches({name}), abilities);
-  const getTotalValueSum = sumFeatValue(byTypeAbility(SAVING_THROW, name));
-  return modifier
-    + getTotalValueSum(feats)
-    + (
-      isProficient(SAVING_THROW, {ability: name}, feats)
-      ? proficiencyBonus
-      : 0);
+  const {ability} = saving;
+  return calcSkillSaving({
+    type: SAVING_THROW,
+    ability,
+    proficiencySelector: {ability},
+    featValueSelector: byTypeAbility(SAVING_THROW, ability),
+    abilities,
+    feats,
+  })
 };
