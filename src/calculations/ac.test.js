@@ -92,4 +92,50 @@ describe('ac', () => {
       expect(result).toEqual(16)
     })
   })
+
+  describe('given bases, modifier', () => {
+    const bases = [3, 3];
+    const abilities = [{
+      name: DEX,
+      modifier: 4
+    }]
+
+    describe('given a limit to modifier', () => {
+      const feats = [{
+        type: 'ANOTHER',
+        payload: {
+          ability: CON,
+        },
+      },{
+        type: AC,
+        payload: {
+          limitTo: 3
+        }
+      }]
+
+      it('when I calculate the ac', () => {
+        const result = ac(bases, abilities, feats);
+        expect(result).toEqual(9);
+      })
+
+      describe('given two diferent limits on the modifier', () => {
+        const feats = [{
+          type: AC,
+          payload: {
+            limitTo: 3
+          }
+        }, {
+          type: AC,
+          payload: {
+            limitTo: 2
+          }
+        }]
+
+        it('when I calculate the ac', () => {
+          const result = ac(bases, abilities, feats);
+          expect(result).toEqual(8);
+        })
+      })
+    });
+  })
 })

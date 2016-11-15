@@ -8,6 +8,7 @@ import {
   isEmpty,
   includes,
   map,
+  min,
   subtract,
   concat,
   divide,
@@ -61,10 +62,17 @@ const acAbilities = flow(
 const allAcAbilities = feats => ({name}) => includes(
   name, acAbilities(feats))
 
+const maximumFromModifer = flow(
+  filter(feats => feats.type === AC && 'limitTo' in feats.payload),
+  map(flow(get('payload.limitTo'), defaultTo(Infinity))),
+  min
+);
+
 export const ac = (bases, abilities = [], feats) => {
   return flow(
     filter(allAcAbilities(feats)),
     map(get('modifier')),
+    map(m => min([m, maximumFromModifer(feats)])),
     concat(bases),
     sum
   )(abilities);
